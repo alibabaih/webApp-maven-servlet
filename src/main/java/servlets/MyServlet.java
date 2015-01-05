@@ -1,5 +1,6 @@
 package servlets;
 
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -8,7 +9,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
 
-@WebServlet("/s") // this servlet will be accessible by www.url/s
+@WebServlet("/s") // this servlet will be accessible by http://localhost:8080/s
 public class MyServlet extends HttpServlet {
 
     @Override
@@ -21,8 +22,14 @@ public class MyServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) // get request
             throws ServletException, IOException {
         response.setContentType("text/html");
-        PrintWriter out = response.getWriter();
 
-        out.println("Hello Word");
+        String varTextA = "Hello World!";
+        request.setAttribute("textA", varTextA);
+        String varTextB = "It JSP.";
+        request.setAttribute("textB", varTextB);
+
+        RequestDispatcher dispatcher = request.getRequestDispatcher("/index.jsp");
+        dispatcher.forward(request, response);
     }
 }
+//and add this servlet on jsp page (index.jsp)
